@@ -86,6 +86,23 @@ const AreaSelector = forwardRef<ISelectorRef, ISelectorProps>(
       props.destroySelectArea()
     }, [])
 
+    const onDeleteEle = useCallback(async () => {
+      const selections = targetListRef.current.filter((item) => item) || []
+
+      if (confirm('Are you sure you want to delete the selected elements?')) {
+        selections.forEach((element) => {
+          if (element && element instanceof Element) {
+            element.remove()
+          }
+        })
+
+        targetListRef.current = []
+        targetRectListRef.current = []
+        forceUpdate()
+        props.destroySelectArea()
+      }
+    }, [])
+
     useImperativeHandle(
       propsRef,
       () => ({
@@ -137,7 +154,11 @@ const AreaSelector = forwardRef<ISelectorRef, ISelectorProps>(
         e.preventDefault()
         const target = e.target as Element
         if (target.closest('.select-confirm')) {
-          onSave()
+          console.log('%c=target', 'color:red', target)
+          // onSave()
+        }
+        if (target.closest('.select-delete')) {
+          onDeleteEle()
         } else if (target?.closest('.select-inner')) {
           const key = parseInt(
             target.getAttribute('data-select-index') as string,
@@ -188,14 +209,20 @@ const AreaSelector = forwardRef<ISelectorRef, ISelectorProps>(
     return (
       <>
         <div className={classnames(styles.mask, 'select-inner')}>
-          Click an area to select it, click it again to deselect it. ESC exits,
-          Enter completes
+          <div style={{ width: '500px' }}>
+            Click an area to select it, click it again to deselect it. ESC
+            exits,Enter completes
+          </div>
           {!!targetRectListRef.current.length && (
-            <div
-              className={classnames(styles.confirm, 'select-confirm')}
-              onClick={onSave}>
-              Confirm selection{targetRectListRef.current.length}
-            </div>
+            <>
+              <div className={classnames(styles.delete, 'select-delete')}>
+                Delete element
+              </div>
+              {/* <div
+                className={classnames(styles.confirm, 'select-confirm')} >
+                  Confirm selection{targetRectListRef.current.length}-a
+              </div> */}
+            </>
           )}
         </div>
 

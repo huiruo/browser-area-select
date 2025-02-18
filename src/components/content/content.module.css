@@ -42,10 +42,33 @@
 .confirm {
   height: 24px;
   line-height: 24px;
-  margin-left: 42px;
+  margin-left: 20px;
   background-color: #00B96B;
   box-sizing: border-box;
   border-color: #00B96B;
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-block;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 400;
+  padding: 0 8px;
+  text-align: center;
+  touch-action: manipulation;
+  user-select: none;
+  vertical-align: middle;
+  white-space: nowrap;
+  text-decoration: none;
+  pointer-events: all;
+}
+
+.delete {
+  height: 24px;
+  line-height: 24px;
+  margin-left: 20px;
+  background-color: brown;
+  box-sizing: border-box;
+  border-color: brown;
   border-radius: 4px;
   cursor: pointer;
   display: inline-block;
