@@ -169,13 +169,24 @@ const ScreenShot = forwardRef<IScreenShotRef, IScreenShotProps>(
           height: Math.abs(endRef.current.top - startRef.current.top),
         })
 
-        canvas.toBlob((res) => {
+        canvas.toBlob((blob) => {
+          if (!blob) {
+            console.error('Failed to create blob from canvas')
+            return
+          }
+
+          const url = URL.createObjectURL(blob)
+          const link = document.createElement('a')
+          link.download = `screenshot-${new Date().getTime()}.png`
+          link.href = url
+          document.body.appendChild(link)
+          link.click()
+          document.body.removeChild(link)
+          URL.revokeObjectURL(url)
+
+          // 转换为 base64 用于调试
           /*
-          sendMessageToSandBox(SandBoxMessageType.startOcr, {
-            blob: res,
-          });
-          */
-          blobToBase64(res)
+          blobToBase64(blob)
             .then((base64String) => {
               console.log('sendMessageToSandBox-toBlob-2:', {
                 canvas,
@@ -185,20 +196,16 @@ const ScreenShot = forwardRef<IScreenShotRef, IScreenShotProps>(
             .catch((error) => {
               console.error(error)
             })
+            */
 
           loadingRef.current = false
           forceUpdate()
           props.destroySelectArea()
-        })
+        }, 'image/png')
       } catch (error) {
+        console.error('Screenshot failed:', error)
         loadingRef.current = false
         forceUpdate()
-        /*
-        sendMessageToSandBox(SandBoxMessageType.startOcr, {
-          blob: '',
-        });
-        */
-
         props.destroySelectArea()
       }
     }, [])

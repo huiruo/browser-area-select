@@ -98,32 +98,38 @@ export function Main() {
     <div className={styles.container}>
       {/* your currentUrl is: {tab?.url} */}
       <ul className={styles.ul}>
-        <li className={styles.item} onClick={onEnterManually}>
-          Enter content manually
-        </li>
-
         <li
           className={styles.item}
           onClick={() => onAreaSelect(StartSelectEnum.areaSelect)}>
-          Area select
+          Delete elements
         </li>
 
         <li
           className={styles.item}
           onClick={() => onAreaSelect(StartSelectEnum.screenShot)}>
-          Screenshot c
+          Area screenshots
         </li>
 
-        <li className={styles.item} onClick={onClipEntirePage}>
+        {/* <li
+          className={styles.item}
+          onClick={() => onAreaSelect(StartSelectEnum.areaSelect)}>
+          Area select
+        </li> */}
+
+        {/* <li className={styles.item} onClick={onClipEntirePage}>
           Clip ClipEntire Page
-        </li>
+        </li> */}
+
+        {/* <li className={styles.item} onClick={onEnterManually}>
+          Enter content manually
+        </li> */}
       </ul>
 
-      <div>
+      {/* <div>
         <button className={styles.saveBtn} onClick={onSubmit}>
           Save to penx
         </button>
-      </div>
+      </div> */}
     </div>
   )
 }

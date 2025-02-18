@@ -89,18 +89,19 @@ const AreaSelector = forwardRef<ISelectorRef, ISelectorProps>(
     const onDeleteEle = useCallback(async () => {
       const selections = targetListRef.current.filter((item) => item) || []
 
-      if (confirm('Are you sure you want to delete the selected elements?')) {
-        selections.forEach((element) => {
-          if (element && element instanceof Element) {
-            element.remove()
-          }
-        })
+      // if (confirm('Are you sure you want to delete the selected elements?')) {
+      // console.log('%c=onDeleteEle','color:red',selections)
+      selections.forEach((element) => {
+        if (element && element instanceof Element) {
+          element.remove()
+        }
+      })
 
-        targetListRef.current = []
-        targetRectListRef.current = []
-        forceUpdate()
-        props.destroySelectArea()
-      }
+      targetListRef.current = []
+      targetRectListRef.current = []
+      forceUpdate()
+      props.destroySelectArea()
+      // }
     }, [])
 
     useImperativeHandle(
